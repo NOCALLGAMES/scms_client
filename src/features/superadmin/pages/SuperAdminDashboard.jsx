@@ -20,14 +20,14 @@ import { useNavigate } from "react-router-dom";
 import { useBrand } from "../../../contexts/BrandContext";
 
 // ─── Stat Card ───────────────────────────────────────────────────────────────
-const StatCard = ({ label, value, icon: Icon, color, sub }) => (
+const StatCard = ({ label, value, fullValue, icon: Icon, color, sub }) => (
   <div className={`rounded-2xl p-6 border ${color.border} ${color.bg} flex items-start space-x-4 shadow-sm group hover:scale-[1.02] transition-all duration-200`}>
     <div className={`p-3 rounded-xl ${color.icon} shadow-md`}>
       <Icon className="text-xl text-white" />
     </div>
     <div className="min-w-0">
       <p className="text-xs font-bold text-gray-500 uppercase tracking-widest">{label}</p>
-      <p className="text-2xl sm:text-3xl font-extrabold text-gray-900 mt-1 truncate">{value}</p>
+      <p className="text-2xl sm:text-3xl font-extrabold text-gray-900 mt-1 truncate" title={fullValue || (typeof value === 'string' || typeof value === 'number' ? value : undefined)}>{value}</p>
       {sub && <p className="text-xs text-gray-400 mt-1 font-medium">{sub}</p>}
     </div>
   </div>
@@ -62,7 +62,16 @@ const SuperAdminDashboard = () => {
     new Intl.NumberFormat("en-NG", {
       style: "currency",
       currency: "NGN",
-      maximumFractionDigits: 0,
+      notation: "compact",
+      compactDisplay: "short",
+      maximumFractionDigits: 1,
+    }).format(val);
+
+  const formatCurrencyExact = (val) =>
+    new Intl.NumberFormat("en-NG", {
+      style: "currency",
+      currency: "NGN",
+      maximumFractionDigits: 2,
     }).format(val);
 
   return (
@@ -98,6 +107,7 @@ const SuperAdminDashboard = () => {
         <StatCard
           label="Platform Liquidity"
           value={statsLoading ? "—" : formatCurrency(stats?.finances?.totalSystemFunds || 0)}
+          fullValue={statsLoading ? null : formatCurrencyExact(stats?.finances?.totalSystemFunds || 0)}
           icon={FaNairaSign}
           color={{ bg: "bg-green-50", border: "border-green-100", icon: "bg-green-600" }}
           sub="Total aggregate balance"
@@ -105,6 +115,7 @@ const SuperAdminDashboard = () => {
         <StatCard
           label="Loan Exposure"
           value={statsLoading ? "—" : formatCurrency(stats?.finances?.totalOutstandingLoans || 0)}
+          fullValue={statsLoading ? null : formatCurrencyExact(stats?.finances?.totalOutstandingLoans || 0)}
           icon={FiCreditCard}
           color={{ bg: "bg-orange-50", border: "border-orange-100", icon: "bg-orange-600" }}
           sub="Platform-wide risk"
