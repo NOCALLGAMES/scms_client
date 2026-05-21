@@ -10,6 +10,7 @@ import {
   FiChevronRight,
   FiX,
   FiActivity,
+  FiTrendingUp,
 } from "react-icons/fi";
 import { useAuth, useLogout } from "../../../features/auth/hooks/useAuth";
 
@@ -27,6 +28,11 @@ const navItems = [
   { name: "Global Users", path: "/superadmin/users", icon: <FiUsers /> },
   { name: "Platform Team", path: "/superadmin/team", icon: <FiShield /> },
   { name: "Audit Logs", path: "/superadmin/activity", icon: <FiActivity /> },
+  {
+    name: "Platform Reports",
+    path: "/superadmin/reports",
+    icon: <FiTrendingUp />,
+  },
 ];
 
 const SuperAdminSidebar = ({ isOpen, setIsOpen }) => {
