@@ -17,8 +17,8 @@ const Login = () => {
 
   const onSubmit = async (data) => {
     try {
-      const response = await loginMutation.mutateAsync(data);
-      if (response?.data?.user?.role === 'super_admin') {
+      const user = await loginMutation.mutateAsync(data);
+      if (user?.role === 'super_admin') {
         navigate("/superadmin/dashboard");
       } else {
         navigate("/dashboard");

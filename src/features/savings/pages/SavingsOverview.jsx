@@ -35,11 +35,20 @@ const SavingsOverview = () => {
   const fetchOverviewData = React.useCallback(async (silent = false) => {
     if (!silent) setIsLoading(true);
     try {
-      const [plansRef, accountsRef, chartRef] = await Promise.all([
+      const [plansResult, accountsResult, chartResult] = await Promise.allSettled([
         getMySavingsPlans(),
         getMyAccounts(),
         getChartData(),
       ]);
+
+      if (accountsResult.status === "rejected") {
+        throw accountsResult.reason;
+      }
+
+      const plansRef = plansResult.status === "fulfilled" ? plansResult.value : [];
+      const accountsRef = accountsResult.value || [];
+      const chartRef =
+        chartResult.status === "fulfilled" ? chartResult.value : { data: [] };
 
       const mainSavings = accountsRef
         .filter((acc) => acc.accountType === "savings")
@@ -72,7 +81,7 @@ const SavingsOverview = () => {
       setAccounts([...mainSavings, ...targetPlans]);
 
       setSavingsData(
-        chartRef.data.map((item) => ({
+        (chartRef.data || []).map((item) => ({
           month: item.name,
           amount: item.savings,
         })),
