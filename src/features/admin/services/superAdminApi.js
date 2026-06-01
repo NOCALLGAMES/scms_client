@@ -56,3 +56,10 @@ export const getAuditLogs = async (params = {}) => {
     const { data } = await api.get('/super-admin/audit-logs', { params });
     return data.data;
 };
+
+// ─── Get Platform Reports Summary ───────────────────────────────────────────
+export const getPlatformReportSummary = async (params = {}) => {
+    const { data } = await api.get('/super-admin/reports/summary', { params });
+    return data.data;
+};
+

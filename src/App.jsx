@@ -31,6 +31,7 @@ import PlatformTeam from "./features/superadmin/pages/PlatformTeam";
 import Messages from "./features/dashboard/pages/Messages";
 import Support from "./features/dashboard/pages/Support";
 import SuperAdminProfile from "./features/superadmin/pages/SuperAdminProfile";
+import SuperAdminReports from "./features/superadmin/pages/SuperAdminReports";
 
 import MemberProfile from "./features/members/pages/MemberProfile";
 import SavingsOverview from "./features/savings/pages/SavingsOverview";
@@ -238,6 +239,7 @@ const AppRoutes = () => {
           <Route path="/superadmin/team" element={<PlatformTeam />} />
           <Route path="/superadmin/activity" element={<AuditLogExplorer />} />
           <Route path="/superadmin/profile" element={<SuperAdminProfile />} />
+          <Route path="/superadmin/reports" element={<SuperAdminReports />} />
         </Route>
       </Route>
 
