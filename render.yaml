@@ -1,5 +1,5 @@
 services:
-  - type: static
+  - type: web
     name: scms-client
     runtime: static
     buildCommand: npm ci && npm run build
