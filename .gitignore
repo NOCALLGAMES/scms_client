@@ -12,7 +12,6 @@ node_modules/
 jspm_packages/
 
 # Build artifacts
-dist/
 dist-ssr/
 *.local
 
